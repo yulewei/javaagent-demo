@@ -1,0 +1,6 @@
+rootProject.name = 'javaagent-demo'
+
+include 'proj-premain'
+include 'proj-byte-buddy'
+include 'proj-agentmain'
+include 'proj-demo'

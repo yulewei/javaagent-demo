@@ -1,0 +1,62 @@
+apply plugin: 'java'
+apply plugin: 'application'
+
+archivesBaseName = 'proj-demo'
+
+mainClassName = 'com.demo.App'
+
+dependencies {
+    compile project(':proj-premain')
+    compile project(':proj-byte-buddy')
+    compile project(':proj-agentmain')
+    compile files("${System.getProperty('java.home')}/../lib/tools.jar")
+
+    // https://mvnrepository.com/artifact/org.apache.commons/commons-lang3
+    compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.8.1'
+    // https://mvnrepository.com/artifact/net.bytebuddy/byte-buddy-agent
+    compile group: 'net.bytebuddy', name: 'byte-buddy-agent', version: '1.8.22'
+
+    testCompile 'junit:junit:4.12'
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'com.demo.App'
+    }
+    from {
+        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
+
+task runDemo(type: JavaExec) {
+    main = "com.demo.App"
+    classpath = sourceSets.main.runtimeClasspath
+}
+
+task runPremainDemo(type: JavaExec) {
+    main = "com.demo.App"
+    classpath = sourceSets.main.runtimeClasspath
+    jvmArgs = ["-javaagent:${project.rootDir}/proj-premain/target/libs/proj-premain.jar=hello agent"]
+}
+
+task runPremainDemo2(type: JavaExec) {
+    main = "com.demo.App"
+    classpath = sourceSets.main.runtimeClasspath
+    jvmArgs = ["-javaagent:${project.rootDir}/proj-byte-buddy/target/libs/proj-byte-buddy.jar=hello java"]
+}
+
+task runAgentLoader(type: JavaExec) {
+    main = "com.demo.AgentLoader"
+    classpath = sourceSets.main.runtimeClasspath
+    args = ["com.demo.App",
+            "${project.rootDir}/proj-agentmain/target/libs/proj-agentmain.jar",
+           "hello agent"]
+}
+
+task runAgentLoader2(type: JavaExec) {
+    main = "com.demo.AgentLoader2"
+    classpath = sourceSets.main.runtimeClasspath
+    args = ["com.demo.App",
+            "${project.rootDir}/proj-byte-buddy/target/libs/proj-byte-buddy.jar",
+            "hello agent"]
+}

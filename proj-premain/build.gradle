@@ -1,0 +1,17 @@
+archivesBaseName = 'proj-premain'
+
+dependencies {
+    // https://mvnrepository.com/artifact/org.apache.bcel/bcel
+    compile group: 'org.apache.bcel', name: 'bcel', version: '6.2'
+
+    testCompile 'junit:junit:4.12'
+}
+
+jar {
+    manifest {
+        attributes 'Premain-Class': 'com.demo.MyPremain'
+    }
+    from {
+        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
