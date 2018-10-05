@@ -1,0 +1,22 @@
+apply plugin: 'java'
+
+archivesBaseName = 'proj-byte-buddy'
+
+dependencies {
+    // https://mvnrepository.com/artifact/net.bytebuddy/byte-buddy
+    compile group: 'net.bytebuddy', name: 'byte-buddy', version: '1.8.22'
+
+    testCompile 'junit:junit:4.12'
+}
+
+jar {
+    manifest {
+        attributes 'Premain-Class': 'com.demo.ByteBuddyAgent'
+        attributes 'Agent-Class': 'com.demo.ByteBuddyAgent'
+        attributes 'Can-Redefine-Classes' : true
+        attributes 'Can-Retransform-Classes' : true
+    }
+    from {
+        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
