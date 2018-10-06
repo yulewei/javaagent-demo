@@ -39,7 +39,7 @@ task runPremainDemo(type: JavaExec) {
     jvmArgs = ["-javaagent:${project.rootDir}/proj-premain/target/libs/proj-premain.jar=hello agent"]
 }
 
-task runPremainDemo2(type: JavaExec) {
+task runPremainBuddyDemo(type: JavaExec) {
     main = "com.demo.App"
     classpath = sourceSets.main.runtimeClasspath
     jvmArgs = ["-javaagent:${project.rootDir}/proj-byte-buddy/target/libs/proj-byte-buddy.jar=hello java"]
@@ -53,7 +53,7 @@ task runAgentLoader(type: JavaExec) {
            "hello agent"]
 }
 
-task runAgentLoader2(type: JavaExec) {
+task runAgentLoaderBuddy(type: JavaExec) {
     main = "com.demo.AgentLoader2"
     classpath = sourceSets.main.runtimeClasspath
     args = ["com.demo.App",
