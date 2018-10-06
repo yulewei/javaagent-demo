@@ -18,13 +18,13 @@ import java.security.ProtectionDomain;
 public class MyPremain {
 
     public static void premain(String agentArgs, Instrumentation inst) {
-        inst.addTransformer(new HelloTransformer(agentArgs));
+        inst.addTransformer(new GreetingTransformer(agentArgs));
     }
 
-    public static class HelloTransformer implements ClassFileTransformer {
+    public static class GreetingTransformer implements ClassFileTransformer {
         private String agentArgs;
 
-        public HelloTransformer(String agentArgs) {
+        public GreetingTransformer(String agentArgs) {
             this.agentArgs = agentArgs;
         }
 

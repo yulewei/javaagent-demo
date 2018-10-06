@@ -18,7 +18,7 @@ import java.security.ProtectionDomain;
 public class MyAgentMain {
 
     public static void agentmain(String agentArgs, Instrumentation inst) {
-        inst.addTransformer(new HelloTransformer(agentArgs), true);
+        inst.addTransformer(new GreetingTransformer(agentArgs), true);
         try {
             Class clazz = Class.forName("com.demo.App");
             if (inst.isModifiableClass(clazz)) {
@@ -29,10 +29,10 @@ public class MyAgentMain {
         }
     }
 
-    public static class HelloTransformer implements ClassFileTransformer {
+    public static class GreetingTransformer implements ClassFileTransformer {
         private String agentArgs;
 
-        public HelloTransformer(String agentArgs) {
+        public GreetingTransformer(String agentArgs) {
             this.agentArgs = agentArgs;
         }
 
