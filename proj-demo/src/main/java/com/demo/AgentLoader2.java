@@ -26,7 +26,6 @@ public class AgentLoader2 {
                 break;
             }
         }
-
         ByteBuddyAgent.attach(new File(agentJar), jvmPid, options);
     }
 }
