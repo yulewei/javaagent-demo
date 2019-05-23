@@ -26,7 +26,7 @@ hello agent
 ```
 
 
-依次运行 `gradle runDemo` 和 `gradle runAgentLoader`，`com.demo.App` 的 `main` 的输出结果 `hello world`，在加载 agent 后被替换为 `hello agent`，示例：
+依次运行 `gradle runDemo` 和 `gradle runAgentLoader`，`com.demo.App` 的 `main` 的输出结果 `hello world`，在加载 agent 后被替换为 `hello agent`，执行输出示例：
 
 ```
 hello world
@@ -63,7 +63,7 @@ public static java.lang.String com.demo.App2.getGreeting() took 507ms
 hello world
 ```
 
-agentmain 方式，依次运行 `gradle runDemo2` 和 `gradle runAgentLoaderBuddy`，示例：
+agentmain 方式，依次运行 `gradle runDemo2` 和 `gradle runAgentLoaderBuddy`，执行输出示例：
 
 ```
 hello world

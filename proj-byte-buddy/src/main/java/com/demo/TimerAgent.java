@@ -9,13 +9,13 @@ import java.lang.instrument.Instrumentation;
 
 public class TimerAgent {
 
-    public static void premain(String arguments, Instrumentation instrumentation) {
+    public static void premain(String agentArgs, Instrumentation inst) {
         new AgentBuilder.Default()
-                .type(ElementMatchers.named("com.demo.App2"))
+                .type(ElementMatchers.any())
                 .transform((builder, type, classLoader, module) ->
-                        builder.method(ElementMatchers.any())
+                        builder.method(ElementMatchers.nameMatches(agentArgs))
                                 .intercept(MethodDelegation.to(TimingInterceptor.class)))
-                .installOn(instrumentation);
+                .installOn(inst);
     }
 
     public static void agentmain(String agentArgs, Instrumentation inst) {
@@ -23,10 +23,10 @@ public class TimerAgent {
                 .disableClassFormatChanges()
                 .with(AgentBuilder.RedefinitionStrategy.RETRANSFORMATION)
 //                .with(AgentBuilder.Listener.StreamWriting.toSystemOut())
-                .type(ElementMatchers.named("com.demo.App2"))
+                .type(ElementMatchers.any())
                 .transform((builder, type, classLoader, module) ->
                         builder.visit(Advice.to(TimingAdvice.class)
-                                .on(ElementMatchers.named("getGreeting"))))
+                                .on(ElementMatchers.nameMatches(agentArgs))))
                 .installOn(inst);
     }
 
