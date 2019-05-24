@@ -13,6 +13,7 @@ public class TimingAdvice {
 
     @Advice.OnMethodExit
     public static void exit(@Advice.Origin Method method, @Advice.Enter long start) {
-        System.out.println(method + " took " + (System.currentTimeMillis() - start) + "ms");
+        long duration = System.currentTimeMillis() - start;
+        System.out.println(method + " took " + duration + "ms");
     }
 }
